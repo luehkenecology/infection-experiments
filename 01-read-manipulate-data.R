@@ -47,4 +47,9 @@ dimnames(albopictus_all_2)[[2]] <- c("experiment_no",  "start_date",      "speci
 # subset virus ZIKV
 albopictus_virus_sub <- subset(albopictus_all, virus %in% c("ZIKV"))
 
+# identify titres <= 1e+02 but infection = 0
+ego <- cbind(albopictus_virus_sub$titre>=1e+02, albopictus_virus_sub$infection)
+write.table(albopictus_virus_sub[which((ego[,1] == ego[,2])==F),], "emp.csv")
 
+fdf2$infection2 <- ifelse(fdf2$titre_method == "CPE" | fdf2$titre_method == "CPE/PCR", fdf2$infection, ifelse(fdf2$titre_method == "PCR",ifelse(fdf2$ct_value <= 35, 1, 0), NA))
+fdf2$infection  <- fdf2$infection2
