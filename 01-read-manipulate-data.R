@@ -7,6 +7,9 @@ setwd(PROJHOME)
 # read project
 library(xlsx)
 
+# read funtions
+source("R/rates.R")
+
 # read
 albopictus1 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 1)
 albopictus2 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 2)
@@ -42,5 +45,6 @@ dimnames(albopictus_all_2)[[2]] <- c("experiment_no",  "start_date",      "speci
                                    "freezer" ,        "rack",            "box" )  
 
 # subset virus ZIKV
-fdf2 <- subset(albopictus_all, virus %in% c("ZIKV"))
+albopictus_virus_sub <- subset(albopictus_all, virus %in% c("ZIKV"))
+
 
