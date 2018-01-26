@@ -23,3 +23,10 @@ albopictus4_1 <- albopictus4[ !is.na(albopictus4[,2]), ]
 albopictus5_1 <- albopictus5[ !is.na(albopictus5[,2]), ]
 albopictus6_1 <- albopictus6[ !is.na(albopictus6[,2]), ]
 
+# delete columns only with NAs
+albopictus_all <- data.frame(rbind(albopictus1_1[,-22],
+                                   albopictus2_1[,-22],
+                                   albopictus3_1,
+                                   albopictus4_1,
+                                   albopictus5_1[,-22],
+                                   albopictus6_1[,-22]))
