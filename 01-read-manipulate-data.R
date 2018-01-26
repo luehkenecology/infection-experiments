@@ -35,7 +35,7 @@ albopictus_all <- data.frame(rbind(albopictus1_1[,-22],
 albopictus_all_2 <- albopictus_all[,2:20]
 
 # rename columns to fit the rates-function
-dimnames(albopictus_all)[[2]] <- c("experiment_no",  "start_date",      "species" ,        "origin",         
+dimnames(albopictus_all_2)[[2]] <- c("experiment_no",  "start_date",      "species" ,        "origin",         
                                    "temperature",     "virus",           "input_total",     "blood_fed_total",
                                    "specimens", "body_part", "dpi",             "tube_id" ,       
                                    "ct_value" ,       "infection"  ,     "titre" ,          "titre_method" ,  
