@@ -40,3 +40,7 @@ dimnames(albopictus_all_2)[[2]] <- c("experiment_no",  "start_date",      "speci
                                    "specimens", "body_part", "dpi",             "tube_id" ,       
                                    "ct_value" ,       "infection"  ,     "titre" ,          "titre_method" ,  
                                    "freezer" ,        "rack",            "box" )  
+
+# subset virus ZIKV
+fdf2 <- subset(albopictus_all, virus %in% c("ZIKV"))
+
