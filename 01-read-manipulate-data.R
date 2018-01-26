@@ -30,3 +30,6 @@ albopictus_all <- data.frame(rbind(albopictus1_1[,-22],
                                    albopictus4_1,
                                    albopictus5_1[,-22],
                                    albopictus6_1[,-22]))
+
+# delete row_no
+albopictus_all_2 <- albopictus_all[,2:20]
