@@ -79,9 +79,3 @@ ggplot(ggg2, aes(as.factor(temperature), as.numeric(transmission_rate))) +
 # identify titres <= 1e+02 but infection = 0
 ego <- cbind(albopictus_virus_sub$titre>=1e+02, albopictus_virus_sub$infection)
 write.table(albopictus_virus_sub[which((ego[,1] == ego[,2])==F),], "output/emp.csv")
-
-library(plyr)
-colnames(albopictus_virus_sub)
-rates_results <- rates(albopictus_virus_sub)
-
-rates_results2 <- subset(rates_results, dpi >1)
