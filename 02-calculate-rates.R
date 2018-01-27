@@ -5,7 +5,6 @@ rm(RPROJ)
 setwd(PROJHOME)
 
 # read project
-library(xlsx)
 library(plyr)
 
 # read funtions
