@@ -10,8 +10,16 @@ library(xlsx)
 # read funtions
 source("R/rates.R")
 
+# read data
 data <- read.table("output/albopictus_sub.csv", header = T)
 
-ggg <- rates(albopictus_sub)
-ggg2 <- ggg[ggg$dpi>1,]
+data_rates <- rates(albopictus_sub)
+
+# only rates
+data_rates_sub <- data_rates[data_rates$dpi>1,]
+
+# write results
+write.table(data_rates_sub, "output/data_rates_sub.csv",
+            col.names = T, row.names = F, sep = ";")
+
 
