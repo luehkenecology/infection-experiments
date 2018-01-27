@@ -7,9 +7,6 @@ setwd(PROJHOME)
 # read project
 library(xlsx)
 
-# read funtions
-source("R/rates.R")
-
 albopictus_1_1 <- read.xlsx("data/Aedes albopictus calabria.xlsx", 1)
 albopictus_1_2 <- read.xlsx("data/Aedes albopictus calabria.xlsx", 3)
 
