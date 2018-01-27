@@ -67,12 +67,7 @@ write.table(albopictus_sub, "output/albopictus_sub.csv",
             col.names = T, row.names = F, sep = ";")
 
 
-library(ggplot2)
-ggplot(ggg2, aes(as.factor(temperature), as.numeric(transmission_rate))) + 
-  geom_point() +
-  facet_wrap(~origin+dpi) + 
-  theme_bw()
-  
+
 
 
 
