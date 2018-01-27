@@ -66,8 +66,6 @@ albopictus_sub$infection  <- albopictus_sub$infection2
 write.table(albopictus_sub, "output/albopictus_sub.csv", 
             col.names = T, row.names = F, sep = ";")
 
-ggg <- rates(albopictus_sub)
-ggg2 <- ggg[ggg$dpi>1,]
 
 library(ggplot2)
 ggplot(ggg2, aes(as.factor(temperature), as.numeric(transmission_rate))) + 
@@ -76,25 +74,6 @@ ggplot(ggg2, aes(as.factor(temperature), as.numeric(transmission_rate))) +
   theme_bw()
   
 
-ggg3 <- ggg2[,c(4:5, 17)]
-ggg3
-
-
-
-
-
-albopictus_sub$infection <- as.numeric(as.vector(albopictus_sub$infection))
-albopictus_sub$titre <- as.numeric(as.vector(albopictus_sub$titre))
-albopictus_sub$ct_value <- as.numeric(as.vector(albopictus_sub$ct_value))
-albopictus_sub$temperature <- as.numeric(substr(albopictus_sub$temperature, 1, 2))
-
-albopictus_sub$infection2 <- ifelse(albopictus_sub$titre_method == "CPE" | albopictus_sub$titre_method == "CPE/PCR", albopictus_sub$infection, ifelse(albopictus_sub$titre_method == "PCR",ifelse(albopictus_sub$ct_value <= 35, 1, 0), NA))
-albopictus_sub$infection  <- albopictus_sub$infection2
-
-
-
-rates_results <- rates(fdf2)
-rates_results2 <- subset(rates_results, dpi > 1)
 
 
 # identify titres <= 1e+02 but infection = 0
