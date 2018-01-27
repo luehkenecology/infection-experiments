@@ -15,7 +15,7 @@ source("R/rates.R")
 data <- read.table("output/albopictus_sub.csv", header = T, sep = ";")
 
 # calculate rates
-data_rates <- rates(albopictus_sub)
+data_rates <- rates(data)
 
 # only rates for dpi > 1 (why > 1 and not > 0???)
 data_rates_sub <- data_rates[data_rates$dpi>1,]
