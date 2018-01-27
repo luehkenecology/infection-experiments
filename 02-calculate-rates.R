@@ -4,7 +4,7 @@ attach(RPROJ)
 rm(RPROJ)
 setwd(PROJHOME)
 
-# read project
+# read library
 library(plyr)
 
 # read funtions
