@@ -10,46 +10,96 @@ library(xlsx)
 # read funtions
 source("R/rates.R")
 
-# read
-albopictus1 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 1)
-albopictus2 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 2)
-albopictus3 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 3)
-albopictus4 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 4)
-albopictus5 <- read.xlsx("data/Aedes albopictus Italien 2017.xlsx", 1)
-albopictus6 <- read.xlsx("data/Aedes albopictus Italien 2017.xlsx", 2)
+albopictus_1_1 <- read.xlsx("data/Aedes albopictus calabria.xlsx", 1)
+albopictus_1_2 <- read.xlsx("data/Aedes albopictus calabria.xlsx", 3)
 
-# delete rows of the NAs by NAs in the names of experiments
-albopictus1_1 <- albopictus1[ !is.na(albopictus1[,2]), ]
-albopictus2_1 <- albopictus2[ !is.na(albopictus2[,2]), ]
-albopictus3_1 <- albopictus3[ !is.na(albopictus3[,2]), ]
-albopictus4_1 <- albopictus4[ !is.na(albopictus4[,2]), ]
-albopictus5_1 <- albopictus5[ !is.na(albopictus5[,2]), ]
-albopictus6_1 <- albopictus6[ !is.na(albopictus6[,2]), ]
+albopictus_2_1 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 1)
+albopictus_2_2 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 2)
+albopictus_2_3 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 3)
+albopictus_2_4 <- read.xlsx("data/Aedes albopictus Deutschland.xlsx", 4)
 
-# delete columns only with NAs
-albopictus_all <- data.frame(rbind(albopictus1_1[,-22],
-                                   albopictus2_1[,-22],
-                                   albopictus3_1,
-                                   albopictus4_1,
-                                   albopictus5_1[,-22],
-                                   albopictus6_1[,-22]))
+albopictus_3_1 <- read.xlsx("data/Aedes albopictus Freiburg.xlsx", 1)
+albopictus_3_2 <- read.xlsx("data/Aedes albopictus Freiburg.xlsx", 2)
+albopictus_3_3 <- read.xlsx("data/Aedes albopictus Freiburg.xlsx", 3)
 
-# delete row_no
-albopictus_all_2 <- albopictus_all[,2:20]
+albopictus_4_1 <- read.xlsx("data/Aedes albopictus Italien 2017.xlsx", 1)
+albopictus_4_2 <- read.xlsx("data/Aedes albopictus Italien 2017.xlsx", 2)
 
-# rename columns to fit the rates-function
-dimnames(albopictus_all_2)[[2]] <- c("experiment_no",  "start_date",      "species" ,        "origin",         
-                                   "temperature",     "virus",           "input_total",     "blood_fed_total",
-                                   "specimens", "body_part", "dpi",             "tube_id" ,       
-                                   "ct_value" ,       "infection"  ,     "titre" ,          "titre_method" ,  
-                                   "freezer" ,        "rack",            "box" )  
+albopictus_1_1_2 <- albopictus_1_1[ !is.na(albopictus_1_1[,2]), ]
+albopictus_1_2_2 <- albopictus_1_2[ !is.na(albopictus_1_2[,2]), ]
+albopictus_2_1_2 <- albopictus_2_1[ !is.na(albopictus_2_1[,2]), ]
+albopictus_2_2_2 <- albopictus_2_2[ !is.na(albopictus_2_2[,2]), ]
+albopictus_2_3_2 <- albopictus_2_3[ !is.na(albopictus_2_3[,2]), ]
+albopictus_2_4_2 <- albopictus_2_4[ !is.na(albopictus_2_4[,2]), ]
+albopictus_3_1_2 <- albopictus_3_1[ !is.na(albopictus_3_1[,2]), ]
+albopictus_3_2_2 <- albopictus_3_2[ !is.na(albopictus_3_2[,2]), ]
+albopictus_3_3_2 <- albopictus_3_3[ !is.na(albopictus_3_3[,2]), ]
+albopictus_4_1_2 <- albopictus_4_1[ !is.na(albopictus_4_1[,2]), ]
+albopictus_4_2_2 <- albopictus_4_2[ !is.na(albopictus_4_2[,2]), ]
 
-# subset virus ZIKV
-albopictus_virus_sub <- subset(albopictus_all, virus %in% c("ZIKV"))
+# removing columns with only NAs
+albopictus_all <- data.frame(rbind(albopictus_1_1_2[,-c(1,21:22)],
+                                   albopictus_1_2_2[,-c(1,21:22)],
+                                   albopictus_2_1_2[,-c(1,21:22)],
+                                   albopictus_2_2_2[,-c(1,21:22)],
+                                   albopictus_2_3_2[,-c(1,21)],
+                                   albopictus_2_4_2[,-c(1,21)],
+                                   albopictus_3_1_2[,-c(1,21:22)],
+                                   albopictus_3_2_2[,-c(1,21:22)],
+                                   albopictus_3_3_2[,-c(1,21:22)],
+                                   albopictus_4_1_2[,-c(1,21:22)],
+                                   albopictus_4_2_2[,-c(1,21:22)]))
+
+# rename columns
+dimnames(albopictus_all)[[2]] <- c("experiment_no",  "start_date",     
+                                   "species" ,        "origin",         
+                                   "temperature",     "virus",        
+                                   "input_total",     "blood_fed_total",
+                                   "specimens", "body_part", "dpi",           
+                                   "tube_id" ,       
+                                   "ct_value" ,       "infection"  ,   
+                                   "titre" ,          "titre_method" ,  
+                                   "freezer" ,        "rack",         
+                                   "box" )  
+
+albopictus_sub <- subset(albopictus_all, virus %in% c("ZIKV"))
+albopictus_sub$infection2 <- ifelse(albopictus_sub$titre_method == "CPE" | albopictus_sub$titre_method == "CPE/PCR", albopictus_sub$infection, ifelse(albopictus_sub$titre_method == "PCR",ifelse(albopictus_sub$ct_value <= 35, 1, 0), NA))
+albopictus_sub$infection  <- albopictus_sub$infection2
+
+ggg <- rates(albopictus_sub)
+ggg2 <- ggg[ggg$dpi>1,]
+
+ggplot(ggg2, aes(temperature, transmission_rate)) + 
+  geom_point() +
+  
+
+ggg3 <- ggg2[,c(4:5, 17)]
+ggg3
+
+
+
+
+
+albopictus_sub$infection <- as.numeric(as.vector(albopictus_sub$infection))
+albopictus_sub$titre <- as.numeric(as.vector(albopictus_sub$titre))
+albopictus_sub$ct_value <- as.numeric(as.vector(albopictus_sub$ct_value))
+albopictus_sub$temperature <- as.numeric(substr(albopictus_sub$temperature, 1, 2))
+
+albopictus_sub$infection2 <- ifelse(albopictus_sub$titre_method == "CPE" | albopictus_sub$titre_method == "CPE/PCR", albopictus_sub$infection, ifelse(albopictus_sub$titre_method == "PCR",ifelse(albopictus_sub$ct_value <= 35, 1, 0), NA))
+albopictus_sub$infection  <- albopictus_sub$infection2
+
+
+
+rates_results <- rates(fdf2)
+rates_results2 <- subset(rates_results, dpi > 1)
+
 
 # identify titres <= 1e+02 but infection = 0
 ego <- cbind(albopictus_virus_sub$titre>=1e+02, albopictus_virus_sub$infection)
-write.table(albopictus_virus_sub[which((ego[,1] == ego[,2])==F),], "emp.csv")
+write.table(albopictus_virus_sub[which((ego[,1] == ego[,2])==F),], "output/emp.csv")
 
-fdf2$infection2 <- ifelse(fdf2$titre_method == "CPE" | fdf2$titre_method == "CPE/PCR", fdf2$infection, ifelse(fdf2$titre_method == "PCR",ifelse(fdf2$ct_value <= 35, 1, 0), NA))
-fdf2$infection  <- fdf2$infection2
+library(plyr)
+colnames(albopictus_virus_sub)
+rates_results <- rates(albopictus_virus_sub)
+
+rates_results2 <- subset(rates_results, dpi >1)
