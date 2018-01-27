@@ -6,6 +6,7 @@ setwd(PROJHOME)
 
 # read project
 library(xlsx)
+library(plyr)
 
 # read funtions
 source("R/rates.R")
