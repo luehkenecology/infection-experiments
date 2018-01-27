@@ -11,7 +11,7 @@ library(xlsx)
 source("R/rates.R")
 
 # read data
-data <- read.table("output/albopictus_sub.csv", header = T)
+data <- read.table("output/albopictus_sub.csv", header = T, sep = ";")
 
 data_rates <- rates(albopictus_sub)
 
