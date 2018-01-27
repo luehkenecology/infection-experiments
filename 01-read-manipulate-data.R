@@ -66,11 +66,16 @@ albopictus_sub <- subset(albopictus_all, virus %in% c("ZIKV"))
 albopictus_sub$infection2 <- ifelse(albopictus_sub$titre_method == "CPE" | albopictus_sub$titre_method == "CPE/PCR", albopictus_sub$infection, ifelse(albopictus_sub$titre_method == "PCR",ifelse(albopictus_sub$ct_value <= 35, 1, 0), NA))
 albopictus_sub$infection  <- albopictus_sub$infection2
 
+write.table(albopictus_sub, "output/albopictus_sub.csv", col.names = T, row.names = F)
+
 ggg <- rates(albopictus_sub)
 ggg2 <- ggg[ggg$dpi>1,]
 
-ggplot(ggg2, aes(temperature, transmission_rate)) + 
+library(ggplot2)
+ggplot(ggg2, aes(as.factor(temperature), as.numeric(transmission_rate))) + 
   geom_point() +
+  facet_wrap(~origin+dpi) + 
+  theme_bw()
   
 
 ggg3 <- ggg2[,c(4:5, 17)]
