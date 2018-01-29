@@ -72,5 +72,5 @@ write.table(albopictus_sub, "output/albopictus_sub.csv",
 
 
 # identify titres <= 1e+02 but infection = 0
-ego <- cbind(albopictus_virus_sub$titre>=1e+02, albopictus_virus_sub$infection)
-write.table(albopictus_virus_sub[which((ego[,1] == ego[,2])==F),], "output/emp.csv")
+ego <- cbind(albopictus_sub$titre>=1e+02, albopictus_sub$infection)
+write.table(albopictus_sub[which((ego[,1] == ego[,2])==F),], "output/emp.csv")
