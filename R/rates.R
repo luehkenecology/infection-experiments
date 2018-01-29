@@ -51,14 +51,14 @@ rates <- function(x){
                                                                sum(subset(dfrm, body_part == "b")$infection, na.rm = T)*100,
           
           
-          transmission_rate_out  = paste(ifelse(sum(subset(dfrm, body_part == "s")$infection, na.rm = T) == 0,  0,
-                                                formatC(round(sum(subset(dfrm, body_part == "s")$infection, na.rm = T)/
-                                                               sum(subset(dfrm, body_part == "b")$infection, na.rm = T)*100, 1), 2, format = "f")),
-                                    " (",
-                                    sum(subset(dfrm, body_part == "s")$infection, na.rm = T),
-                                    "/",
-                                    sum(subset(dfrm, body_part == "b")$infection, na.rm = T),
-                                    ")", sep = ""),
+         # transmission_rate_out  = paste(ifelse(sum(subset(dfrm, body_part == "s")$infection, na.rm = T) == 0,  0,
+        #                                        formatC(round(sum(subset(dfrm, body_part == "s")$infection, na.rm = T)/
+        #                                                       sum(subset(dfrm, body_part == "b")$infection, na.rm = T)*100, 1), 2, format = "f")),
+        #                            " (",
+        #                            sum(subset(dfrm, body_part == "s")$infection, na.rm = T),
+        #                            "/",
+        #                            sum(subset(dfrm, body_part == "b")$infection, na.rm = T),
+        #                            ")", sep = ""),
           
           #titreMEAN = mean(log10(dfrm$titre*2.5*15), na.rm = T),
           
