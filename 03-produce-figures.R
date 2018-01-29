@@ -18,6 +18,9 @@ ggplot(data, aes(as.factor(temperature), as.numeric(transmission_rate))) +
   facet_wrap(~origin+dpi) + 
   theme_bw()
 
+data$dpi <- revalue(as.character(data$dpi), c("14" = "14 dpi",
+                                              "21" = "21 dpi"))
+
 png("figure/tranmission_rate.png",width = 5, height=4, units = 'in', res = 2000)
 ggplot(data, aes(as.factor(temperature), (as.numeric(TR)))) +
   geom_bar(fill = "black", col = "black", stat = "identity") +
