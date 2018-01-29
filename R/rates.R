@@ -1,9 +1,9 @@
 rates <- function(x){ 
   ddply(x, .(species, origin, virus, temperature, dpi), 
         
-        #dfrm <- subset(data, species=="Aedes albopictus" &
-        #                     origin == "Freiburg, Germany" &
-        #                    temperature ==24 & dpi ==14)
+        #  dfrm <- subset(data, species=="Aedes albopictus" &
+        #                   origin == "Freiburg, Germany" &
+        #                   temperature ==24 & dpi ==14)
         
         function(dfrm){
           # total number of specimens
@@ -31,8 +31,31 @@ rates <- function(x){
                             DR = n_positive_legs/n_positive_bodies*100,
                             TR = n_positive_saliva/n_positive_bodies*100,
                             titre_mean = titre_mean,
-                            titre_sd = titre_sd)
-          ) 
+                            titre_sd = titre_sd,
+                            IR_out =  paste(formatC(round(n_positive_bodies/n_total_specimens*100, 2), 2, format = "f"),
+                                            " (",
+                                            n_positive_saliva,
+                                            "/",
+                                            n_positive_bodies,
+                                            ")", sep = ""),
+                            DR_out =  paste(formatC(round(n_positive_legs/n_positive_bodies*100, 2), 2, format = "f"),
+                                            " (",
+                                            n_positive_saliva,
+                                            "/",
+                                            n_positive_bodies,
+                                            ")", sep = ""),
+                            TR_out =  paste(formatC(round(n_positive_saliva/n_positive_bodies*100, 2), 2, format = "f"),
+                                            " (",
+                                            n_positive_saliva,
+                                            "/",
+                                            n_positive_bodies,
+                                            ")", sep = ""),
+                            titre_out = paste(formatC(round(titre_mean, 2), 2, format = "f"),
+                                              " (",
+                                              formatC(round(titre_sd, 2), 2, format = "f"),
+                                              ")", sep = "")
+          )
+          )
         }
   )
 }
