@@ -2,21 +2,20 @@
 rm(list = ls())
 
 # set working directory------------------------------------------------------------
-setwd("C:/Users/RenkeLuehken/Google Drive/Project/VectorCompetenceRiskMaps")
-#setwd("G:/NeuAll/Project/VecCompRiskMap")
+#setwd("C:/Users/RenkeLuehken/Google Drive/Project/VectorCompetenceRiskMaps")
+setwd("G:/NeuAll/Project/VecCompRiskMap")
 
 # load libraries---------------------------------------------------------------------------
 library(raster)
 library(lubridate)
 library(RcppRoll)
 library(plyr)
+
 # read data
 testst <- lapply(2007:2016, function(x) stack(paste("G:/NeuAll/Research_projects/Extract_E_OBS_gridded_dataset/output/tg_0.25deg_reg_v14.0_europe_", 
                                                      x, ".grd", sep = "")))
-testst <- lapply(2007:2016, function(x) stack(paste("C:/Users/RenkeLuehken/Google Drive/Research_projects/Extract_E_OBS_gridded_dataset/output/tg_0.25deg_reg_v14.0_europe_", 
-                                                     x, ".grd", sep = "")))
-
-
+#testst <- lapply(2007:2016, function(x) stack(paste("C:/Users/RenkeLuehken/Google Drive/Research_projects/Extract_E_OBS_gridded_dataset/output/tg_0.25deg_reg_v14.0_europe_", 
+#                                                     x, ".grd", sep = "")))
 
 
 cropping_info <- c(-9, 25, 35, 55)
@@ -61,14 +60,30 @@ ZIKA <- function(values, time_period = 14, temp_thresh = 21){
   einsd$sf
 }
 
+ddd <- c(18, 21, 24, 27)
+
+for(i in 1:4){
+  
+  zika_risk <- apply(gdg2, 1, function(x) ZIKA(x, 
+                                               time_period = 14, 
+                                               temp_thresh = ddd[i]))
+  zika_risk_mean <- apply(zika_risk, 2, 
+                          function(x) mean(x, na.rm = T))
+  
+  zika_mean_map <- setValues(el[[1]], 
+                             zika_risk_mean)
+
+  writeRaster(zika_mean_map,
+              filename=paste("output/mean_temp_14dpi_",ddd[i],"C.grd", sep = ""),
+              bandorder='BIL', overwrite=TRUE)
+}
+
 zika_risk <- apply(gdg2, 1, function(x) ZIKA(x, 
-                                             time_period = 14, 
-                                             temp_thresh = 27))
+                                             time_period = 28, 
+                                             temp_thresh = 21))
 zika_risk_mean <- apply(zika_risk, 2, 
                         function(x) mean(x, na.rm = T))
 
 zika_mean_map <- setValues(el[[1]], 
                            zika_risk_mean)
-
-writeRaster(zika_mean_map,
-            filename="output/mean_temp_14dpi_27C.grd", bandorder='BIL', overwrite=TRUE)
+plot(zika_mean_map>1)
