@@ -1,4 +1,4 @@
-# set working directory
+# set working directory---------------------------------------------------------------------------
 RPROJ <- list(PROJHOME = normalizePath(getwd()))
 attach(RPROJ)
 rm(RPROJ)
@@ -10,33 +10,26 @@ library(lubridate)
 library(RcppRoll)
 library(plyr)
 
-# read eobs temperature data
-testst <- lapply(2007:2016, function(x) stack(paste("output/eobs/tg_0.25deg_reg_v14.0_europe_", 
+# load function---------------------------------------------------------------------------
+source(timeline)
+
+# read a decade of eobs temperature data
+eobs_data <- lapply(2007:2016, function(x) stack(paste("output/eobs/tg_0.25deg_reg_v14.0_europe_", 
                                                      x, ".grd", sep = "")))
 
-
+# cropping information
 cropping_info <- c(-9, 25, 35, 55)
 
-ell <- lapply(testst, function(x) crop(x, cropping_info))
+# crop temperature files
+eobs_data_crop <- lapply(eobs_data, function(x) crop(x, cropping_info))
 
-el <- stack(ell)
-#el <- stack(testst)
+# stack the 10 years
+eobs_data_crop_stack <- stack(eobs_data_crop)
 
-gdg2 <- getValues(el)
+# change raster to matrix
+eobs_data_matrix <- getValues(eobs_data_crop_stack)
 
-timeline <- function(start_year = 2007,end_year = 2016,
-                     start_month = 1, end_month = 12,
-                     start_day_of_month = 1, 
-                     end_day_of_month = 31){
-  
-  A1<-paste(start_year, "-", start_month, "-", start_day_of_month, sep = "")
-  A2<-paste(end_year, "-", end_month, "-", end_day_of_month, sep = "")
-  time.s=as.POSIXct(A1,tz='UTC')
-  time.e = as.POSIXct(A2,tz='UTC')
-  seq(time.s, time.e, by='24 hours')
-}
-
-ee <- timeline(2007,2016)
+ee <- timeline(2007, 2016)
 
 ZIKA <- function(values, time_period = 14, temp_thresh = 21){
 
