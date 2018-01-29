@@ -60,8 +60,15 @@ dimnames(albopictus_all)[[2]] <- c("experiment_no",  "start_date",
                                    "box" )  
 
 albopictus_sub <- subset(albopictus_all, virus %in% c("ZIKV"))
-albopictus_sub$infection2 <- ifelse(albopictus_sub$titre_method == "CPE" | albopictus_sub$titre_method == "CPE/PCR", albopictus_sub$infection, ifelse(albopictus_sub$titre_method == "PCR",ifelse(albopictus_sub$ct_value <= 35, 1, 0), NA))
+
+# identify titres <= 1e+02 but infection = 0
+#ego <- cbind(albopictus_sub$titre>=1e+02, albopictus_sub$infection)
+#write.table(albopictus_sub[which((ego[,1] == ego[,2])==F),], "output/emp.csv")
+
+#albopictus_sub$infection2 <- ifelse(albopictus_sub$titre_method == "CPE" | albopictus_sub$titre_method == "CPE/PCR", albopictus_sub$infection, ifelse(albopictus_sub$titre_method == "PCR",ifelse(albopictus_sub$ct_value <= 35, 1, 0), NA))
+albopictus_sub$infection2 <- ifelse(albopictus_sub$titre_method == "CPE" | albopictus_sub$titre_method == "CPE/PCR", albopictus_sub$infection, ifelse(albopictus_sub$titre_method == "PCR",ifelse(albopictus_sub$titre >=100, 1, 0), NA))
 albopictus_sub$infection  <- albopictus_sub$infection2
+
 
 write.table(albopictus_sub, "output/albopictus_sub.csv", 
             col.names = T, row.names = F, sep = ";")
@@ -71,6 +78,4 @@ write.table(albopictus_sub, "output/albopictus_sub.csv",
 
 
 
-# identify titres <= 1e+02 but infection = 0
-ego <- cbind(albopictus_sub$titre>=1e+02, albopictus_sub$infection)
-write.table(albopictus_sub[which((ego[,1] == ego[,2])==F),], "output/emp.csv")
+
