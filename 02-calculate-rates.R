@@ -11,7 +11,7 @@ library(plyr)
 source("R/rates.R")
 
 # read data
-data <- read.table("output/albopictus_sub.csv", header = T, sep = ";")
+data <- read.table("output/albopictus_zikv_sub.csv", header = T, sep = ";")
 
 # calculate rates
 data_rates <- rates(data)
