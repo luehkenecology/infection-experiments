@@ -11,7 +11,7 @@ library(ggplot2)
 data <- read.table("output/data_rates_sub.csv", header = T, sep = ";")
 
 #
-ggplot(data, aes(as.factor(temperature), as.numeric(transmission_rate))) + 
+ggplot(data, aes(as.factor(temperature), as.numeric(TR))) + 
   geom_point() +
   xlab("Temperature (°C)") + 
   ylab("Transmission rate (%)") +
