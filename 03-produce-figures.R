@@ -18,13 +18,15 @@ ggplot(data, aes(as.factor(temperature), as.numeric(transmission_rate))) +
   facet_wrap(~origin+dpi) + 
   theme_bw()
 
-png("figure/tranmission_rate.png",width = 5, height=4, units = 'in', res = 600)
-ggplot(data, aes(as.factor(temperature), (as.numeric(transmission_rate)))) +
+png("figure/tranmission_rate.png",width = 5, height=4, units = 'in', res = 2000)
+ggplot(data, aes(as.factor(temperature), (as.numeric(TR)))) +
   geom_bar(fill = "black", col = "black", stat = "identity") +
-  facet_wrap(~ origin+dpi)  +
-  geom_text(aes(label = paste(formatC(round(transmission_rate,2), 2, format = "f"), "%", sep = " "), y = 0.5+(as.numeric(transmission_rate))+5), size = 3, position =  position_dodge(width = 1))+
+  facet_wrap(~ origin+dpi) +
+  geom_text(aes(label = paste(formatC(round(TR,2), 2, format = "f"), "%", sep = " "), 
+                y = 0.5+(as.numeric(TR)) + 2.5), size = 3, 
+            position =  position_dodge(width = 1)) +
   ylab("Transmission rate (%)") +
-  xlab(expression("Temperature ("*degree*C*")"))+
+  xlab(expression("Temperature ("*degree*C*")")) +
   scale_y_continuous(limits = c(0,45), expand = c(0, 0)) +
   theme_bw()
 dev.off()
