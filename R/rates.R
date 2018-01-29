@@ -10,18 +10,23 @@ rates <- function(x){
           n_total_specimens  = nrow((dfrm[!duplicated(dfrm[,c(1,9)]),]))
           
           # number of positive bodies
-          n_positive_bodies = sum(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),], body_part == "b")$infection, na.rm = T)
+          n_positive_bodies = sum(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),],
+                                         body_part == "b")$infection, na.rm = T)
           
           # number of positive legs
-          n_positive_legs = sum(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),], body_part == "l")$infection, na.rm = T)
+          n_positive_legs = sum(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),],
+                                       body_part == "l")$infection, na.rm = T)
           
           # number of positive saliva
-          n_positive_saliva = sum(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),], body_part == "s")$infection, na.rm = T)
+          n_positive_saliva = sum(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),],
+                                         body_part == "s")$infection, na.rm = T)
           
+          # mean of titre
+          titre_mean = mean(log10(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),],
+                                         body_part == "b" & infection == 1)$titre*2.5*15), na.rm = T)
           
-          titre_mean = mean(log10(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),], body_part == "b" & infection == 1)$titre*2.5*15), na.rm = T)
-          
-          titre_sd = sd(log10(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),], body_part == "b" & infection == 1)$titre*2.5*15), na.rm = T)
+          titre_sd = sd(log10(subset(dfrm[!duplicated(dfrm[,c(1,9,10)]),],
+                                     body_part == "b" & infection == 1)$titre*2.5*15), na.rm = T)
           
           return(data.frame(n_total_specimens = n_total_specimens,
                             n_positive_bodies = n_positive_bodies,
