@@ -1,9 +1,8 @@
-# clear memory---------------------------------------------------------------------------
-rm(list = ls())
-
-# set working directory------------------------------------------------------------
-#setwd("C:/Users/RenkeLuehken/Google Drive/Project/VectorCompetenceRiskMaps")
-setwd("G:/NeuAll/Project/VecCompRiskMap")
+# set working directory
+RPROJ <- list(PROJHOME = normalizePath(getwd()))
+attach(RPROJ)
+rm(RPROJ)
+setwd(PROJHOME)
 
 # load libraries---------------------------------------------------------------------------
 library(raster)
@@ -11,11 +10,9 @@ library(lubridate)
 library(RcppRoll)
 library(plyr)
 
-# read data
-testst <- lapply(2007:2016, function(x) stack(paste("G:/NeuAll/Research_projects/Extract_E_OBS_gridded_dataset/output/tg_0.25deg_reg_v14.0_europe_", 
+# read eobs temperature data
+testst <- lapply(2007:2016, function(x) stack(paste("output/eobs/tg_0.25deg_reg_v14.0_europe_", 
                                                      x, ".grd", sep = "")))
-#testst <- lapply(2007:2016, function(x) stack(paste("C:/Users/RenkeLuehken/Google Drive/Research_projects/Extract_E_OBS_gridded_dataset/output/tg_0.25deg_reg_v14.0_europe_", 
-#                                                     x, ".grd", sep = "")))
 
 
 cropping_info <- c(-9, 25, 35, 55)
@@ -40,7 +37,6 @@ timeline <- function(start_year = 2007,end_year = 2016,
 }
 
 ee <- timeline(2007,2016)
-
 
 ZIKA <- function(values, time_period = 14, temp_thresh = 21){
 
