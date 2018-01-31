@@ -11,7 +11,9 @@ library(RcppRoll)
 library(plyr)
 
 # load function---------------------------------------------------------------------------
-source(timeline)
+source("R/timeline.R")
+source("R/cum_temp_days.R")
+
 
 # read a decade of eobs temperature data
 eobs_data <- lapply(2007:2016, function(x) stack(paste("output/eobs/tg_0.25deg_reg_v14.0_europe_", 
@@ -29,37 +31,22 @@ eobs_data_crop_stack <- stack(eobs_data_crop)
 # change raster to matrix
 eobs_data_matrix <- getValues(eobs_data_crop_stack)
 
+# caculate timeline from 2007 to 2016
 ee <- timeline(2007, 2016)
 
-ZIKA <- function(values, time_period = 14, temp_thresh = 21){
 
-  DDU <- as.numeric(values)
-  
-  DDU2 <- roll_sum(DDU,n=time_period,
-                  fill = 0, align = "right", na.rm = T)
-  
-  testfull<-data.frame(year = year(ee),
-                       DDU = ifelse(DDU2 >= (time_period * temp_thresh), 1, 0))
-  
-  einsd <- ddply(testfull, "year",
-                 summarize, 
-                 sf = sum(DDU, na.rm = T))
-  
-  # output
-  einsd$sf
-}
-
+# temps
 ddd <- c(18, 21, 24, 27)
 
 for(i in 1:4){
   
-  zika_risk <- apply(gdg2, 1, function(x) ZIKA(x, 
+  zika_risk <- apply(eobs_data_matrix, 1, function(x) cum_temp_days(x, 
                                                time_period = 14, 
                                                temp_thresh = ddd[i]))
   zika_risk_mean <- apply(zika_risk, 2, 
                           function(x) mean(x, na.rm = T))
   
-  zika_mean_map <- setValues(el[[1]], 
+  zika_mean_map <- setValues(eobs_data_crop_stack[[1]], 
                              zika_risk_mean)
 
   writeRaster(zika_mean_map,
