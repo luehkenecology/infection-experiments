@@ -1,9 +1,9 @@
 rates <- function(x){ 
   ddply(x, .(species, origin, virus, temperature, dpi), 
         
-        #  dfrm <- subset(data, species=="Aedes albopictus" &
-        #                   origin == "Freiburg, Germany" &
-        #                   temperature ==24 & dpi ==14)
+        #dfrm <- subset(culex_all_sub, species == "Culex torrentium" & temperature == 27 & dpi == 21)
+        #dfrm$infection <- as.numeric(as.character(dfrm$infection))
+        
         
         function(dfrm){
           # total number of specimens
