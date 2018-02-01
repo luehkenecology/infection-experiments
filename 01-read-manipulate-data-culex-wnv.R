@@ -48,7 +48,6 @@ culex_5_3_2 <- culex_5_3[ !is.na(culex_5_3[,2]), ]
 culex_6_1_2 <- culex_6_1[ !is.na(culex_6_1[,2]), ]
 culex_6_2_2 <- culex_6_2[ !is.na(culex_6_2[,2]), ]
 
-
 # removing columns with only NAs
 culex_all <- data.frame(rbind(culex_1_1_2[,-c(1,21:22)],
                               culex_1_2_2[,-c(1,21)],
@@ -69,29 +68,38 @@ culex_all <- data.frame(rbind(culex_1_1_2[,-c(1,21:22)],
                               culex_6_2_2[,-c(1,21:22)]))
 
 # rename columns
-dimnames(culex_all)[[2]] <- c("experiment_no",  "start_date",     
-                              "species" ,        "origin",         
-                              "temperature",     "virus",        
-                              "input_total",     "blood_fed_total",
+dimnames(culex_all)[[2]] <- c("experiment_no", "start_date",     
+                              "species", "origin",         
+                              "temperature", "virus",        
+                              "input_total", "blood_fed_total",
                               "specimens", "body_part", "dpi",           
-                              "tube_id" ,       
-                              "ct_value" ,       "infection"  ,   
-                              "titre" ,          "titre_method" ,  
-                              "freezer" ,        "rack",         
-                              "box" )  
+                              "tube_id","ct_value",
+                              "infection" , "titre",
+                              "titre_method", "freezer",
+                              "rack", "box")
 
 culex_all_sub <- subset(culex_all, virus %in% c("WNV"))
 
-culex_all_sub$infection2 <- ifelse(culex_all_sub$titre_method == "CPE" | culex_all_sub$titre_method == "CPE/PCR", culex_all_sub$infection, ifelse(culex_all_sub$titre_method == "PCR",ifelse(culex_all_sub$titre >=100, 1, 0), NA))
-culex_all_sub$infection  <- culex_all_sub$infection2
 
+
+culex_all_sub$infection <- as.numeric(as.character(culex_all_sub$infection))
+
+
+culex_all_sub <- culex_all_sub[!(culex_all_sub$experiment_no == 20 & 
+                                   culex_all_sub$temperature == 27 & 
+                                   culex_all_sub$dpi == 21 &
+                                   culex_all_sub$specimens == 3),]
+
+culex_all_sub$titre_method <- ifelse(culex_all_sub$titre > 0 & 
+                                       is.na(culex_all_sub$titre_method), 
+                                     "PCR",
+                                     as.character(culex_all_sub$titre_method))
+
+
+culex_all_sub$infection2 <- ifelse(culex_all_sub$titre_method == "CPE" | culex_all_sub$titre_method == "CPE/PCR"  | culex_all_sub$titre_method == "CPE /PCR", culex_all_sub$infection, ifelse(culex_all_sub$titre_method == "PCR",ifelse(culex_all_sub$titre >=100, 1, 0), NA))
+culex_all_sub$infection  <- culex_all_sub$infection2
+dfdf <- subset(culex_all_sub, species == "Culex torrentium" & temperature == 27 & dpi == 21)
+dfdf[,12:16]
 
 write.table(culex_all_sub, "output/culex_all_sub.csv", 
             col.names = T, row.names = F, sep = ";")
-
-
-
-
-
-
-
